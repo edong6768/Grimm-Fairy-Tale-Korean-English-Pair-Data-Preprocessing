@@ -48,13 +48,13 @@ if __name__=='__main__':
     # split a story into paragraphs and split english and korean
     parag_pairs = []
     for n, story in enumerate(tqdm(stories)):
-        story = re.sub("(\(?https?://.*\)?|\([^\(\)]+\))", "", text)
+        story = re.sub("(\(?https?://.*\)?|\([^\(\)]+\))", "", story)
         
         for parag in re.split("\n{2,}", story):
             en_ko = en_ko_split(parag, rv_dlg=True)
             if not en_ko: continue
-            parag_pairs.append((*en_ko, n))
+            parag_pairs.append((n, *en_ko))
         
     # save
-    df = pd.DataFrame(parag_pairs, columns=('en', 'ko', 'story_num'))
+    df = pd.DataFrame(parag_pairs, columns=('story_id', 'en', 'ko'))
     df.to_csv(f_root+"fairy_tale_grimm_dialog_removed.tsv", mode='w', encoding='utf-8', sep="\t")
