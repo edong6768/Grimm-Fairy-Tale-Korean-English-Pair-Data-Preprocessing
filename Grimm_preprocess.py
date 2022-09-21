@@ -51,10 +51,10 @@ if __name__=='__main__':
         story = re.sub("(\(?https?://.*\)?|\([^\(\)]+\))", "", story)
         
         for parag in re.split("\n{2,}", story):
-            en_ko = en_ko_split(parag, rv_dlg=True)
+            en_ko = en_ko_split(parag)
             if not en_ko: continue
             parag_pairs.append((n, *en_ko))
         
     # save
     df = pd.DataFrame(parag_pairs, columns=('story_id', 'en', 'ko'))
-    df.to_csv(f_root+"fairy_tale_grimm_dialog_removed.tsv", mode='w', encoding='utf-8', sep="\t")
+    df.to_csv(f_root+"fairy_tale_grimm.tsv", mode='w', encoding='utf-8', sep="\t")
